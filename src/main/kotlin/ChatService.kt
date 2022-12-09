@@ -146,9 +146,11 @@ object ChatService {
         chatList
             .filter { it.id == chatId }
             .ifEmpty { throw ChatNotFound("чат не найден!") }
+            .asSequence()
         return messageList
             .filter { it.chatId == chatId && it.id >= lastMessageId }
             .take(count)
+            .toList()
     }
 
     fun clearAllData() {
